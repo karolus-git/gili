@@ -1,4 +1,4 @@
-# GILI, your own gift list application
+# [ In Development ] GILI, your own gift list application
 
 A simple way to exchange your wish lists to friends :
 - Create an account 
