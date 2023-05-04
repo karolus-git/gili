@@ -16,26 +16,27 @@ import json
 
 salt = bcrypt.gensalt()
 
-#Instance
-app = FastAPI()
-
-#Origins
-origins = ["localhost:3000", ]#,"http://192.168.0.222:3000"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=[""],
-    allow_headers=[""],
-)
-
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
             return str(o)
         return json.JSONEncoder.default(self, o)   
 
+#Instance
+app = FastAPI()
+
+@app.get("/")
+async def base():
+    return {"message":"Health Check Passed!"}
+
+#Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/api/user")
