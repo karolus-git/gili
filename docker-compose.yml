@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    network_mode: "host"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME : "${MONGO_USER}"
+      MONGO_INITDB_ROOT_PASSWORD : "${MONGO_PWD}"
+      MONGO_INITDB_DATABASE : "${MONGO_DATABASE}"
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+  fastapi:
+    network_mode: "host"
+    environment:
+      MONGO_USER : "${MONGO_USER}"
+      MONGO_PWD : "${MONGO_PWD}"
+      MONGO_DATABASE : "${MONGO_DATABASE}"
+      MONGO_PORT : "${MONGO_PORT}"
+      MONGO_IP : "${MONGO_IP}"
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+  react:
+    network_mode: "host"
+    build:
+      context: ./react-app
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
